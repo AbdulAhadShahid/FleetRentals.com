@@ -1,0 +1,31 @@
+﻿@model Fleet_Rentals.Models.SignUp
+@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+@section signin
+{
+    <title>Untitled Document</title>
+    <link rel="stylesheet" href="~/content/customer.css" />
+}
+
+<h1 style="text-align:center">Welcome to your Profile @Model.Full_Name</h1>
+
+<div style="margin-left:50px">
+    
+<img src=@Model.Image width="250" height="250"/><br /><br />
+   
+<label style="margin-left:70px"><b>Account ID:</b> @Model.Id </label> <br /> <br />
+
+<label style="margin-left:70px"><b>Business Email:</b> @Model.Business_Email </label> <br /> <br />
+
+<label style="margin-left:70px"><b>Full Name:</b> @Model.Full_Name </label> <br /> <br />
+
+<label style="margin-left:70px"><b>UserName:</b> @Model.Username </label> <br /> <br />
+
+<label style="margin-left:70px"><b>Password:</b> @Model.Password </label> <br /> <br />
+
+</div>
+
+        

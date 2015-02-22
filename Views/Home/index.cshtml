@@ -1,0 +1,586 @@
+﻿@model Fleet_Rentals.Models.SignUp
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Fleet Rentals</title>
+		<link href="~/content/styles.css" rel="stylesheet" type="text/css">
+        <link href="~/content/slider.css" rel="stylesheet" type="text/css">
+        
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+  
+  
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  
+  
+ <style type="text/css">
+.ui-datepicker {
+ font-size:8pt;
+ }
+</style>
+<script type="text/javascript" src="~/Scripts/RefBooking.js"></script>
+<script type="text/javascript" src="~/Scripts/OtherBooking.js"></script>
+<script type="text/javascript" src="~/Scripts/addresses.js"></script>
+<script type="text/javascript">
+
+            var slideimages = new Array() // create new array to preload images
+            slideimages[0] = new Image() // create new instance of image object
+            slideimages[0].src = "Desert.jpg" // set image object src property to an image's src, preloading that image in the process
+            slideimages[1] = new Image()
+            slideimages[1].src = "Chrysanthemum.jpg"
+            slideimages[2] = new Image()
+            slideimages[2].src = "Hydrangeas.jpg"
+            slideimages[3] = new Image()
+            slideimages[3].src = "Jellyfish.jpg"			
+        </script>
+
+  
+  <script>
+  var rowR=1;
+  var rowO=1;
+  
+  $(document).ready(function() {
+	  
+	  var date = new Date();
+
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+
+    var today = month + "/" + day + "/" + year ;       
+    $("#datepicker").attr("value", today);
+	  
+    $("#datepicker").datepicker( {
+	numberOfMonths: 2,
+	showButtonPanel: true } );
+  });
+  
+  $(document).ready(function() {
+	  
+	  var date = new Date();
+
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+	
+	if ( month == 12 && day == 31 ) year = year+1;
+	day= (day%31) + 1;
+	if( day == 1) month = (month%12) + 1;
+	
+
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+
+    var today = month + "/" + day + "/" + year ;       
+    $("#datepicker2").attr("value", today);
+	  
+    $("#datepicker2").datepicker( {
+	numberOfMonths: 2,
+	showButtonPanel: true } );
+  });
+  
+   function show2()
+         {
+             var lfckv = document.getElementById("25+").checked;
+             if (lfckv)
+             {
+                 document.getElementById("age").style.display = "none";
+             }
+             else
+             {
+                 document.getElementById("age").style.display = "block";
+             }
+             return;
+         }
+		 
+		  function show3()
+         {
+             var lfckv = document.getElementById("deliveryrequired").checked;
+             if (!lfckv)
+             {
+                 document.getElementById("delivery").style.display = "none";
+             }
+             else
+             {
+                 document.getElementById("delivery").style.display = "block";
+             }
+             return;
+         }
+		 
+		 function show4()
+         {
+             var lfckv = document.getElementById("dropoff").checked;
+             if (!lfckv)
+             {
+                 document.getElementById("drop").style.display = "none";
+             }
+             else
+             {
+                 document.getElementById("drop").style.display = "block";
+             }
+             return;
+         }
+  
+  //Refrigerated Courier Booking OtherCourier
+  function RefBooking()
+         {
+          var x =document.getElementById("RefCourier").style.display;
+		  
+		  if ( x=="none")
+		  	{
+				document.getElementById("RefCourier").style.display="block";
+				document.getElementById("OtherCourier").style.display="none";
+			}
+			else
+			{
+				document.getElementById("RefCourier").style.display="none";
+			}
+			if ( rowR==1 )
+			{
+		  		addRowRef();
+				rowR++;
+			}
+             return;
+         }
+		 
+		 
+		 
+	//Other Courier Booking OtherCourier
+		 function OtherBooking()
+         {
+          var x =document.getElementById("OtherCourier").style.display;
+		  if ( x=="block")
+		  	{
+				document.getElementById("OtherCourier").style.display="none";
+			}
+			else
+			{
+				document.getElementById("OtherCourier").style.display="block";
+				document.getElementById("RefCourier").style.display="none";
+			}
+			
+			if ( rowO==1 )
+			{
+		  		addRowOther();
+				rowO++;
+			}
+				
+             return;
+         }
+  
+  
+  </script>
+   
+        
+	</head>
+	<body >
+	<div id="background">
+	 
+      <div id="GetRatesReservations"><img src="~/images/GetRatesReservations.png" width="289"></div>
+            
+		  <div id="PickupDateandLocation"><font size="2" face="Verdana, Geneva, sans-serif" ><b>Pick-up Date &amp Location:</b></font></div>
+			<div id="OtherNecessaryInform"><font size="2" face="Verdana, Geneva, sans-serif" ><b>Other Necessary Information:</b></font></div>
+			<div id="ReturnDateandLocation"><font size="2" face="Verdana, Geneva, sans-serif" ><b>Return Date &amp; Location:</b></font></div>
+		  <div id="PickupLocation"><font size="2" face="Verdana, Geneva, sans-serif" >Pick-up Location:</font><font color="#CC0000">*</font>  
+		    <select style="width:200px"><option value=""></option>
+          <option value="">755 Albany Hwy
+East Victoria Park WA</option></select> 
+		  </div> 
+		  <div id="PickupDate"><font size="2" face="Verdana, Geneva, sans-serif" >Pick-up Date:</font><font color="#CC0000">*   </font>
+	       
+            @Html.TextBoxFor(Model => Model.Username, new { value="", id="datepicker", size="12" })
+            @*<input type="text" value="" id="datepicker" size="12"/>*@
+            <select>
+            <option value="h" >Time</option>
+            <option value="00.00">00.00</option>
+            <option value="00.30">00.30</option>
+            <option value="01.00">01.00</option>
+            <option value="01.30">01.30</option>
+            <option value="02.00">02.00</option>
+            <option value="02.30">02.30</option>
+            <option value="03.00">03.00</option>
+            <option value="03.30">03.30</option>
+            <option value="04.00">04.00</option>
+            <option value="04.30">04.30</option>
+            <option value="05.00">05.00</option>
+            <option value="05.30">05.30</option>
+            <option value="06.00">06.00</option>
+            <option value="06.30">06.30</option>
+            <option value="07.00">07.00</option>
+            <option value="07.30">07.30</option>
+            <option value="08.00">08.00</option>
+            <option value="08.30">08.30</option>
+            <option value="09.00">09.00</option>
+            <option value="09.30">09.30</option>
+            <option value="10.00">10.00</option>
+            <option value="10.30">10.30</option>
+            <option value="11.00">11.00</option>
+            <option value="11.30">11.30</option>
+            <option selected value="12.00">12.00</option>
+            <option value="12.30">12.30</option>
+            <option value="13.00">13.00</option>
+            <option value="13.30">13.30</option>
+            <option value="14.00">14.00</option>
+            <option value="14.30">14.30</option>
+            <option value="15.00">15.00</option>
+            <option value="15.30">15.30</option>
+            <option value="16.00">16.00</option>
+            <option value="16.30">16.30</option>
+            <option value="17.00">17.00</option>
+            <option value="17.30">17.30</option>
+            <option value="18.00">18.00</option>
+            <option value="18.30">18.30</option>
+            <option value="19.00">19.00</option>
+            <option value="19.30">19.30</option>
+            <option value="20.00">20.00</option>
+            <option value="20.30">20.30</option>
+            <option value="21.00">21.00</option>
+            <option value="21.30">21.30</option>
+            <option value="22.00">22.00</option>
+            <option value="22.30">22.30</option>
+            <option value="23.00">23.00</option>
+            <option value="23.30">23.30</option>
+            </select>
+      </div>
+			<div id="ReturnLocation"><font size="2" face="Verdana, Geneva, sans-serif" >Return Location:</font><font color="#CC0000">* </font>
+			  <select style="width:200px"><option value=""></option>
+          <option value="">755 Albany Hwy
+East Victoria Park WA</option></select> </div>
+		  <div id="Iam25">
+              <input id="25+" type="checkbox" checked="checked" onclick="show2()"/>
+
+              <font size="2" face="Verdana, Geneva, sans-serif"> I am 25+ </font>
+            
+            <div id="age" style="display: none">
+        <font size="2" face ="Verdana, Geneva, sans-serif">Driver's Age </font></br>
+        <select>
+        <option value=""></option>
+		<option value="Under 21">Under 21</option>
+		<option value="21-24">21-24</option>
+		<option value="25 and over">25 and over</option>
+        
+        </select>
+        
+        </div>        
+        <br/>
+        <input id="deliveryrequired" type="checkbox" onclick="show3()"/> <font size="2" face="Verdana, Geneva, sans-serif"> Vehicle Delivery required fee of $100 applied</font>
+        
+         <div id="delivery" style="display: none">
+        @Html.TextBoxFor(Model=>Model.Username, new {id="deladdress",placeholder="Delivery Address",style="width:325px" })
+       @*<input id="deladdress" type="text" placeholder="Delivery Address" style="width:325px"/>*@
+        
+        </div>
+        <br/>     
+         
+         <input id="dropoff" type="checkbox"  onclick="show4()"/><label> 
+         <font size="2" face="Verdana, Geneva, sans-serif"> Pick-up is required by Fleet Rentals, fee of $100 applied</font></label>
+        
+         <div id="drop" style="display: none">
+
+        @Html.TextBoxFor(Model=>Model.Username, new {id="dropaddress",placeholder="Pick up Address",style="width:325px" })   
+       @*<input id="dropaddress" type="text" placeholder="Pick up Address" style="width:325px"/>*@
+        
+        </div>
+            
+            
+          </div>
+		  <div id="ReturnDate"><font size="2" face="Verdana, Geneva, sans-serif" >Return Date:</font><font color="#CC0000">*</font>
+		   
+              @Html.TextBoxFor(Model => Model.Username, new { value="", id="datepicker2", size="12" })
+               @*<input type="text" value="" id="datepicker2" size="12">*@
+            
+             
+            <select>
+            <option value="h" >Time</option>
+            <option value="00.00">00.00</option>
+            <option value="00.30">00.30</option>
+            <option value="01.00">01.00</option>
+            <option value="01.30">01.30</option>
+            <option value="02.00">02.00</option>
+            <option value="02.30">02.30</option>
+            <option value="03.00">03.00</option>
+            <option value="03.30">03.30</option>
+            <option value="04.00">04.00</option>
+            <option value="04.30">04.30</option>
+            <option value="05.00">05.00</option>
+            <option value="05.30">05.30</option>
+            <option value="06.00">06.00</option>
+            <option value="06.30">06.30</option>
+            <option value="07.00">07.00</option>
+            <option value="07.30">07.30</option>
+            <option value="08.00">08.00</option>
+            <option value="08.30">08.30</option>
+            <option value="09.00">09.00</option>
+            <option value="09.30">09.30</option>
+            <option value="10.00">10.00</option>
+            <option value="10.30">10.30</option>
+            <option value="11.00">11.00</option>
+            <option value="11.30">11.30</option>
+            <option selected value="12.00">12.00</option>
+            <option value="12.30">12.30</option>
+            <option value="13.00">13.00</option>
+            <option value="13.30">13.30</option>
+            <option value="14.00">14.00</option>
+            <option value="14.30">14.30</option>
+            <option value="15.00">15.00</option>
+            <option value="15.30">15.30</option>
+            <option value="16.00">16.00</option>
+            <option value="16.30">16.30</option>
+            <option value="17.00">17.00</option>
+            <option value="17.30">17.30</option>
+            <option value="18.00">18.00</option>
+            <option value="18.30">18.30</option>
+            <option value="19.00">19.00</option>
+            <option value="19.30">19.30</option>
+            <option value="20.00">20.00</option>
+            <option value="20.30">20.30</option>
+            <option value="21.00">21.00</option>
+            <option value="21.30">21.30</option>
+            <option value="22.00">22.00</option>
+            <option value="22.30">22.30</option>
+            <option value="23.00">23.00</option>
+            <option value="23.30">23.30</option>
+            </select>
+            
+      </div>
+			<div id="Logo" style="background-color:#21387d"></div>
+			<div id="Logocopy"><img src="~/images/Logo-Fleet.jpg" width="406" height="81"></div>
+			<div id="PhoneLogo"><img src="~/images/p.png" width="33" height="34"></div>
+			<div id="Layer5">
+                
+                <ul class="slides">
+    <input type="radio" name="radio-btn" id="img-1" checked />
+    <li class="slide-container">
+		<div class="slide">
+			<img src="~/images/cover.png" />
+        </div>
+		
+    </li>
+
+    <input type="radio" name="radio-btn" id="img-2" />
+    <li class="slide-container">
+        <div class="slide">
+          <img src="http://farm9.staticflickr.com/8504/8365873811_d32571df3d_z.jpg" />
+        </div>
+		
+    </li>
+
+    <input type="radio" name="radio-btn" id="img-3" />
+    <li class="slide-container">
+        <div class="slide">
+          <img src="http://farm9.staticflickr.com/8068/8250438572_d1a5917072_z.jpg" />
+        </div>
+		
+    </li>
+
+    <input type="radio" name="radio-btn" id="img-4" />
+    <li class="slide-container">
+        <div class="slide">
+          <img src="http://farm9.staticflickr.com/8061/8237246833_54d8fa37f0_z.jpg" />
+        </div>
+		
+    </li>
+
+    <input type="radio" name="radio-btn" id="img-5" />
+    <li class="slide-container">
+        <div class="slide">
+          <img src="http://farm9.staticflickr.com/8055/8098750623_66292a35c0_z.jpg" />
+        </div>
+		
+    </li>
+
+    <input type="radio" name="radio-btn" id="img-6" />
+    <li class="slide-container">
+        <div class="slide">
+          <img src="Jellyfish.jpg" width="101%" height="101%" />
+        </div>
+		@*  *@
+    </li>
+
+    <li class="nav-dots">
+      <label for="img-1" class="nav-dot" id="img-dot-1"></label>
+      <label for="img-2" class="nav-dot" id="img-dot-2"></label>
+      <label for="img-3" class="nav-dot" id="img-dot-3"></label>
+      <label for="img-4" class="nav-dot" id="img-dot-4"></label>
+      <label for="img-5" class="nav-dot" id="img-dot-5"></label>
+      <label for="img-6" class="nav-dot" id="img-dot-6"></label>
+    </li>
+</ul>
+
+                
+</div>
+			<div id="MobileLogo"><img src="~/images/m.png" height="34"></div>
+			<div id="PhoneBookings"><font size="5.5" color="#FFFFFF" face="arial"><b>08 9361 9975</b></div>
+			<div id="MoblieBookings"><font size="5.5" color="#FFFFFF" face="arial"><b>0431 111 102</b></div>
+	  <div id="Menu" style="background-color:#1b336e"></div>
+			<div class="vertpan Home">
+                
+                 <a href="/Home/index">
+                    <img name="Home" src="~/images/home.png"/></a>
+			</div>
+            
+			<div class="vertpan Fleet">
+                <a href="/Fleet/fleet" target="_blank"><img name="Fleet" src="~/images/fleet.png"/></a>
+                    </div>
+            
+			<div class="vertpan Locations">
+                <a href="/Locations/locations" target="_blank"><img name="Locations" src="~/images/locations.png" /></a>
+
+			</div>
+            
+	  <div class="vertpan Reservations">
+         <a href="/Reservations/reservations" target="_blank"><img name="Reservations" src="~/images/reservations.png"/></a>
+	  </div>
+      
+      <div id="RefrigeratorCourierB">
+      
+      <input type="submit" onclick="RefBooking()" value="REFRIGERATED COURIERS" id="refrigerated-courier-button">
+      
+   	    <input type="submit" onclick="OtherBooking()" value="GENERAL COURIERS" class="other-courier-button">
+   	    <br/><br/>
+        
+        
+        <!--REFRIGERATED COURIER-->
+        <div id = "RefCourier" style="display:block">
+        <div id="YourParcel"><font style="font-family:arial;color:#ffffff"><b>Your Parcel</b></font></div>
+        face="Verdana, Geneva, sans-serif"
+        
+         <div id="Form1">
+         @*<form class="pure-form">*@
+        @{Html.BeginForm();}
+      
+      <!--FROM TO-->
+      <font id="fromto" style="color:#ffffff" size="4.5">From To</font><br/>
+      <font id="BA1" style="color:#ffffff" size="1">Business Address</font>
+      <font id="BA2" style="color:#ffffff" size="1">Business Address</font><br/>
+      
+       @Html.TextBoxFor(Model => Model.Username, new {id="xyz", type="address", placeholder="Street Name & No", style="width:150px" })
+     @* <input id="xyz" type="address" placeholder="Street Name & No" style="width:150px">*@
+     
+       @Html.TextBoxFor(Model => Model.Username, new {type="address", placeholder="Street Name & No", style="width:150px" })       
+      @*<input type="address" placeholder="Street Name & No" style="width:150px">*@<br/><br/>
+      
+      <font id="PostcodeSuburb" style="color:#ffffff" size="2">Postcode/Suburb Postcode/Suburb</font><br/>
+      
+       @Html.TextBoxFor(Model => Model.Username, new {id="abc", type="address", @class="intelligence", style="width:150px" })
+      @*<input class="intelligence" id="abc" type="address" style="width:150px">*@
+      
+       @Html.TextBoxFor(Model => Model.Username, new {type="address", @class="intelligence", style="width:150px" })
+      @*<input class="intelligence" type="address" style="width:150px">*@
+        
+         <!--PARCEL DETAILS-->
+        <br/><br/><font style="margin-left:2px;color:#ffffff" size="4.5">Parcel Details</font>
+      
+         <div id="PD">
+        <!--DESCRIPTION-->
+         <font id="DD" style="color:#ffffff" size="1">Description Dimensions(cm)</font>
+         
+         <font id="WT" style="color:#ffffff" size="1.5">Weight(kg) Temp</font><br/>
+        
+        <span id="fooBarRef"></span><br/>
+        
+        <img src="~/images/add_item.png"  onclick="addRowRef()" style="margin-right:50px"/>
+        
+<a href="/Customer/Customer_Details" >
+<img src="~/images/customer_detail.png" />
+</a>     
+       </div>
+       
+@*</form>*@
+@{Html.EndForm();}      
+         
+         </div>
+        
+        </div>
+        
+        
+        
+         <!--Other COURIER-->
+        <div id = "OtherCourier" style="display:none">
+        <div id="YourParcel"><font style="font-family:arial;color:#ffffff"><b>Your Parcel</b></font></div>
+        
+         <div id="Form2">
+         @*<form class="pure-form">*@
+         @{Html.BeginForm();}
+      
+      <!--FROM TO-->
+      <font id="fromto" style="color:#ffffff" size="4.5">From To</font><br/>
+      <font id="BA1" style="color:#ffffff" size="1">Business Address</font>
+      <font id="BA2" style="color:#ffffff" size="1">Business Address</font><br/>
+      
+      @Html.TextBoxFor(Model => Model.Username, new {type="address", id="xyz", style="width:150px",placeholder="Street Name & No" })      
+      @*<input id="xyz" type="address" placeholder="Street Name & No" style="width:150px">*@
+      
+
+      @Html.TextBoxFor(Model => Model.Username, new {type="address",style="width:150px",placeholder="Street Name & No" })
+      @*<input type="address" placeholder="Street Name & No" style="width:150px">*@<br/><br/>
+      
+      <font id="PostcodeSuburb" style="color:#ffffff" size="2">Postcode/Suburb Postcode/Suburb</font><br/>
+      
+       @Html.TextBoxFor(Model => Model.Username, new {type="address", id="abc", @class="intelligence", style="width:150px" })
+     @* <input class="intelligence" id="abc" type="address" style="width:150px">*@
+      
+       @Html.TextBoxFor(Model => Model.Username, new {type="address", @class="intelligence", style="width:150px" })
+      @*<input class="intelligence" type="address" style="width:150px">*@
+         <!--PARCEL DETAILS-->
+        <br/><br/><font style="margin-left:2px;color:#ffffff" size="4.5">Parcel Details</font>
+      
+         <div id="PD">
+        <!--DESCRIPTION-->
+         <font id="DD" style="color:#ffffff" size="1">Description Dimensions(cm)</font>
+         
+         <font id="WT" style="color:#ffffff" size="1.5">Weight(kg)</font><br/>
+        
+        <span id="fooBarOther"></span><br/>
+        
+<img src="/images/add_item.png"  onclick="addRowOther()" style="margin-right:50px"/>
+        
+<a href="/Customer/Customer_Details" >
+<img src="~/images/customer_detail.png" />
+</a>           
+        
+       </div>
+       
+@*</form>*@
+@{Html.EndForm();} 
+         </div>
+        
+        </div>
+        
+        
+	  </div>
+      
+      
+			<div id="GetRatesRentalQuotes"><img src="~/images/getrates.png" width="392" height="559"/></div>
+            
+	  <div class="Login">
+	    <a href="/Customer/Customer_Details"><input type="button" value="Client Login" class="client-login-button"></a></div>
+        
+      
+			<div class="vertpan FAQs">
+              <a href="/Faqs/faqs" target="_blank"><img name="FAQS" src="~/images/faqs.png"/></a>
+			</div>
+            
+			<div class="vertpan ContactUs">
+                <a href="/Contactus/contactus" target="_blank">
+                    <img name="Contact Us" src="~/images/contactus.png"/></a></div>
+            
+            <div id="blk"><img src="~/images/blank.png" name="BLANK" width="153" height="45"/></div>
+            
+           
+  <div id="Shape2"><hr /></div>
+	  <div id="AllRightsReservedAny"><img src="~/images/AllRightsReservedAny.png"></div>
+			
+			<div id="RoundedRectangle1cop"><img src="~/images/but.png"></div>
+	</div>
+ </body>
+ </html>

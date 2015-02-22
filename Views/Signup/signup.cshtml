@@ -1,0 +1,95 @@
+﻿@model Fleet_Rentals.Models.SignUp
+@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section signup
+{
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="~/content/signup.css" />
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#checking').hide();
+           
+
+            $('#b1').click(function () {
+                $('#result').text("");
+                var userName = $('#Username').val();
+
+                if (userName == "")
+                { }
+                else
+                {
+                    $('#checking').show();
+                    $.getJSON("/RecordView/CheckUserName?Username=" + userName, function (data) {
+                        $('#checking').hide();
+                        if (data) {
+                            $('#result').text("User already exists in database");
+
+                        }
+                        else {
+                            $('#result').text("User Name is available");
+                        }
+                    });
+                }
+
+            });
+
+        });
+    </script>
+   
+}
+  
+<div id="mid">
+
+<h1 id="head"> Customer Details </h1>
+<hr/>
+
+@*@{Html.BeginForm("AddStudent", "Signup", FormMethod.Post);}*@
+
+<form action="/Signup/AddStudent" method="post" enctype="multipart/form-data" >
+
+@Html.TextBoxFor(model => model.Business_Email, new {type="email", placeholder="Business Email", @Autocomplete= "off"})
+<font style="font-size:25px" color="#FF0000">*</font><br/>
+@Html.ValidationMessageFor(model => model.Business_Email)
+<br/>
+
+@Html.TextBoxFor(model => model.Full_Name, new {placeholder="Type in Full Name", @Autocomplete= "off"})
+<font style="font-size:25px" color="#FF0000">*</font><br/>
+@Html.ValidationMessageFor(model => model.Full_Name)
+<br/>
+   
+<div id="checking">Checking...</div>
+<div>
+
+    @Html.TextBoxFor(model => model.Username, new {placeholder="Choose Username", @Autocomplete= "off"})
+    <font style="font-size:25px" color="#FF0000">*</font>
+    <input type="button" id="b1" value="Check" /><br/>
+    @Html.ValidationMessageFor(model => model.Username)
+    <div id="result"></div>
+  </div>
+<br/>
+
+@Html.TextBoxFor(model => model.Password, new {type="password", placeholder="Password", @Autocomplete= "off"})
+<font style="font-size:25px" color="#FF0000">*</font><br/>
+@Html.ValidationMessageFor(model => model.Password)
+<br/>
+
+    Upload Image: <input type="file" name="image" /><br/>
+    @Html.ValidationMessageFor(model => model.Image)
+    <br/>
+
+    <input id="submit" type="submit" value="submit"/>
+
+
+     <a href="/RecordView/record">
+    <input id="submit" type="button" value="View Records" />
+     </a>
+
+    </form>
+@*@{Html.EndForm();}*@
+
+</div>
